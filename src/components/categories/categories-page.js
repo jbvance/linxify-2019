@@ -19,7 +19,7 @@ const CategoriesPage = ({ categories, fetchCategories, match }) => {
     <div className="container">
       <Route exact path={`${match.path}`} component={Categories} />
       <Route
-        exatc
+        exact
         path={`${match.path}/:categoryId`}
         component={CategoryLinks}
       />
