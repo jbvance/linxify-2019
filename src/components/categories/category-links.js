@@ -17,7 +17,7 @@ const getLinksByCategoryId = (catId, links) => {
   const filtered = links.filter(link => link.category._id === catId);
   return filtered.map(link => {
     //console.log(link.category._id);
-    return <LinkRow link={link} />;
+    return <LinkRow key={link._id} link={link} />;
   });
 };
 
