@@ -1,31 +1,35 @@
 import React from "react";
 import { connect } from "react-redux";
 
-// deleteUserCategory (id, name) {
-//   if (!window.confirm(`Delete category "${name}"?`)) return;  
-//   this.props.dispatch(deleteCategory(id));        
-                                                                                            
-// }
+import { deleteCategory } from '../../actions/categories';
 
-const listCategories = catList => {
-  return catList.map(category => {
-    return (
-      <div className="link-row" key={category._id}>
-        <div className="url-text">{category.name}</div>
-        <div className="link-row__button-row">
-          <button className="btn btn-primary link-row__button">Edit</button>
-          <button className="btn btn-primary link-row__button">Delete</button>
+const Categories = ({ categories, loading, deleteCategory, error }) => {
+
+  const listCategories = catList => {
+    return catList.map(category => {
+      const { _id, name } = category;
+      return (
+        <div className="link-row" key={_id}>
+          <div className="url-text">{name}</div>
+          <div className="link-row__button-row">
+            <button className="btn btn-primary link-row__button">Edit</button>
+            <button className="btn btn-primary link-row__button" onClick={() => deleteUserCategory(_id, name)}>Delete</button>
+          </div>
         </div>
-      </div>
-    );
-  });
-};
+      );
+    });
+  };
 
-const Categories = ({ categories, fetchCategories, loading }) => {
+  const deleteUserCategory =  (id, name) => {
+    if (!window.confirm(`Delete category "${name}"?`)) return;     
+    deleteCategory(id);                                                                                                      
+  }
+
   return loading ? (
     <h1>...Loading</h1>
   ) : (
     <div>
+      { error && error.error && <div className=" alert alert-danger">{error.error.message}</div>}
       <h2>Categories</h2>
       {listCategories(categories)}
     </div>
@@ -34,7 +38,12 @@ const Categories = ({ categories, fetchCategories, loading }) => {
 
 const mapStateToProps = state => ({
   categories: state.categories.categories,
-  loading: state.categories.loading
+  loading: state.categories.loading,
+  error: state.categories.error
 });
 
-export default connect(mapStateToProps)(Categories);
+const mapDispatchToProps = dispatch => ({
+  deleteCategory: id => dispatch(deleteCategory(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);
