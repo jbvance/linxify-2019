@@ -1,34 +1,40 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import LoadingSpinner from '../loading-spinner/loading-spinner';
-import LinkRow from '../link-row/link-row';
+import { deleteLink } from "../../actions/links.js";
 
-import './user-links.css';
+import LoadingSpinner from "../loading-spinner/loading-spinner";
+import LinkRow from "../link-row/link-row";
 
-const  UserLinks = ({ links, deleteLink, loading }) => {  
-  
+import "./user-links.css";
 
-  if(loading) {
-    return (
-      <LoadingSpinner />
-    )
-  }        
-  return (                  
-      <section className="container links-container"> 
+const UserLinks = ({ links, deleteLink, loading }) => {
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+  return (
+    <section className="container links-container">
       {!links || links.length === 0 ? (
-      <div>No Links</div>
-        ) : (
-          links.map(link => <LinkRow key={link._id} link={link} deleteLink={deleteLink} />)
-        )}                         
-      </section>
-      
+        <div>No Links</div>
+      ) : (
+        links.map(link => (
+          <LinkRow key={link._id} link={link} deleteLink={deleteLink} />
+        ))
+      )}
+    </section>
   );
-}
+};
+
+const mapDispatchToProps = dispatch => ({
+  deleteLink: id => dispatch(deleteLink(id))
+});
 
 const mapStateToProps = state => ({
   loading: state.userLinks.loading,
   links: state.userLinks.links
 });
-    
-export default connect(mapStateToProps)(UserLinks);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserLinks);
