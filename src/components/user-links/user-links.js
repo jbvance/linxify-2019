@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import { deleteLink } from "../../actions/links.js";
+import { openConfirmModal } from "../../actions/ui";
 
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 import LinkRow from "../link-row/link-row";
+import ConfirmationModal from "../confirmation-modal";
 
 import "./user-links.css";
 
-const UserLinks = ({ links, deleteLink, loading }) => {
+const UserLinks = ({ links, deleteLink, loading, ui, openConfirmDelete }) => {
+  const [idToDelete, setIdToDelete] = useState("");
+
+  const deleteLinkTemp = id => {
+    setIdToDelete(id);
+    openConfirmDelete("confirm-delete-link");
+  };
+
+  const confirmDelete = () => {
+    console.log("DELETE CONFIRMED", idToDelete);
+    deleteLink(idToDelete);
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -18,20 +32,30 @@ const UserLinks = ({ links, deleteLink, loading }) => {
         <div>No Links</div>
       ) : (
         links.map(link => (
-          <LinkRow key={link._id} link={link} deleteLink={deleteLink} />
+          <LinkRow key={link._id} link={link} deleteLink={deleteLinkTemp} />
         ))
       )}
+      <ConfirmationModal
+        modalKey="confirm-delete-link"
+        confirmModalState={ui.confirmModalState}
+        title="Confirm Delete"
+        okCallback={() => confirmDelete()}
+      >
+        Are you sure you want to delete this link?
+      </ConfirmationModal>
     </section>
   );
 };
 
 const mapDispatchToProps = dispatch => ({
-  deleteLink: id => dispatch(deleteLink(id))
+  deleteLink: id => dispatch(deleteLink(id)),
+  openConfirmDelete: modalKey => dispatch(openConfirmModal({ modalKey }))
 });
 
 const mapStateToProps = state => ({
   loading: state.userLinks.loading,
-  links: state.userLinks.links
+  links: state.userLinks.links,
+  ui: state.ui
 });
 
 export default connect(
