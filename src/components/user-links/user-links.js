@@ -13,14 +13,14 @@ import "./user-links.css";
 const UserLinks = ({ links, deleteLink, loading, ui, openConfirmDelete }) => {
   const [idToDelete, setIdToDelete] = useState("");
 
-  const deleteLinkTemp = id => {
+  const onDeleteLink = id => {
     setIdToDelete(id);
     openConfirmDelete("confirm-delete-link");
   };
 
   const confirmDelete = () => {
-    console.log("DELETE CONFIRMED", idToDelete);
     deleteLink(idToDelete);
+    setIdToDelete("");
   };
 
   if (loading) {
@@ -32,7 +32,7 @@ const UserLinks = ({ links, deleteLink, loading, ui, openConfirmDelete }) => {
         <div>No Links</div>
       ) : (
         links.map(link => (
-          <LinkRow key={link._id} link={link} deleteLink={deleteLinkTemp} />
+          <LinkRow key={link._id} link={link} deleteLink={onDeleteLink} />
         ))
       )}
       <ConfirmationModal
@@ -40,6 +40,7 @@ const UserLinks = ({ links, deleteLink, loading, ui, openConfirmDelete }) => {
         confirmModalState={ui.confirmModalState}
         title="Confirm Delete"
         okCallback={() => confirmDelete()}
+        cancelCallback={() => setIdToDelete("")}
       >
         Are you sure you want to delete this link?
       </ConfirmationModal>

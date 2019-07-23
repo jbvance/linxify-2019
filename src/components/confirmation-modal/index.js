@@ -15,8 +15,6 @@ const uiActionCreators = {
   closeConfirmModal
 };
 
-console.log("UIACTIONCREATORS", uiActionCreators);
-
 class ConfirmationModal extends Component {
   constructor(props) {
     super(props);
@@ -37,9 +35,11 @@ class ConfirmationModal extends Component {
   }
 
   handleCancel = () => {
-    const { actions, modalKey } = this.props;
-    console.log("ACTIONS", actions);
+    const { actions, modalKey, cancelCallback } = this.props;
     actions.ui.closeConfirmModal({ modalKey });
+    if (cancelCallback) {
+      cancelCallback();
+    }
   };
 
   handleOk = () => {
@@ -54,6 +54,7 @@ class ConfirmationModal extends Component {
     const {
       children,
       okCallback,
+      cancelCallback,
       modalKey,
       confirmModalState,
       title,
