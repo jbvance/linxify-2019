@@ -1,6 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 
+// deleteUserCategory (id, name) {
+//   if (!window.confirm(`Delete category "${name}"?`)) return;  
+//   this.props.dispatch(deleteCategory(id));        
+                                                                                            
+// }
+
 const listCategories = catList => {
   return catList.map(category => {
     return (
