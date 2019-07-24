@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
 import requiresLogin from "../requires-login";
 import Categories from "./categories";
 import CategoryLinks from "./category-links";
+import EditCategory from "../category-form/edit-category";
+import AddCategory from "../category-form/add-category";
 
 import { fetchUserCategories } from "../../actions/categories";
 
@@ -17,12 +19,20 @@ const CategoriesPage = ({ categories, fetchCategories, match }) => {
 
   return (
     <div className="container">
-      <Route exact path={`${match.path}`} component={Categories} />
-      <Route
-        exact
-        path={`${match.path}/:categoryId`}
-        component={CategoryLinks}
-      />
+      <Switch>
+        <Route exact path={`${match.path}/add`} component={AddCategory} />
+        <Route exact path={`${match.path}`} component={Categories} />
+        <Route
+          exact
+          path={`${match.path}/:categoryId`}
+          component={CategoryLinks}
+        />
+        <Route
+          exact
+          path={`${match.path}/:categoryId/edit`}
+          component={EditCategory}
+        />
+      </Switch>
     </div>
   );
 };
