@@ -15,13 +15,14 @@ export const DELETE_LINK_REQUEST = "delete_link_request";
 export const DELETE_LINK_SUCCESS = "delete_link_success";
 export const DELETE_LINK_FAILURE = "delete_link_failure";
 
-export const fetchUserLinks = (dispatch, authToken) => {
+export const fetchUserLinks = () => (dispatch, getState) => {
   dispatch(fetchLinksRequest());
+  const token = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/links`, {
     method: "GET",
     headers: {
       // Provide our auth token as credentials
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${token}`
     }
   })
     .then(res => normalizeResponseErrors(res))

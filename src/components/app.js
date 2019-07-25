@@ -8,7 +8,7 @@ import { fetchUserCategories } from "../actions/categories";
 import Header from "./header-bar";
 import LandingPage from "./landing-page";
 import Dashboard from "./dashboard";
-import EditLink from "../components/user-links/edit-link";
+import UserLinksPage from "../components/user-links/user-links-page";
 import CategoriesPage from "../components/categories/categories-page";
 import RegistrationPage from "./registration-page";
 import { refreshAuthToken } from "../actions/auth";
@@ -53,7 +53,7 @@ export class App extends React.Component {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/register" component={RegistrationPage} />
-        <Route exact path="/links/edit/:linkId" component={EditLink} />
+        <Route path="/links" component={UserLinksPage} />
         <Route path="/categories" component={CategoriesPage} />
       </div>
     );
