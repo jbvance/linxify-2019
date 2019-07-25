@@ -19,8 +19,8 @@ export class App extends React.Component {
       const { dispatch, authToken } = this.props;
       // When we are logged in, refresh the auth token periodically
       this.startPeriodicRefresh();
-      fetchUserLinks(dispatch, authToken);
-      fetchUserCategories();
+      this.props.fetchLinks();
+      this.props.fetchCategories();
     } else if (prevProps.loggedIn && !this.props.loggedIn) {
       // Stop refreshing when we log out
       this.stopPeriodicRefresh();
@@ -60,6 +60,11 @@ export class App extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  fetchCategories: () => dispatch(fetchUserCategories()),
+  fetchLinks: () => dispatch(fetchUserLinks())
+});
+
 const mapStateToProps = state => ({
   hasAuthToken: state.auth.authToken !== null,
   loggedIn: state.auth.currentUser !== null,
@@ -67,4 +72,9 @@ const mapStateToProps = state => ({
 });
 
 // Deal with update blocking - https://reacttraining.com/react-router/web/guides/dealing-with-update-blocking
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

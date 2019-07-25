@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { deleteLink } from "../../actions/links.js";
@@ -6,6 +6,9 @@ import { openConfirmModal } from "../../actions/ui";
 import ConfirmationModal from "../confirmation-modal";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 import LinkRow from "../link-row/link-row";
+import SearchBar from "../search-bar/search-bar";
+
+import { filterLinks } from "../../utils/links.utils";
 
 const CategoryLinks = ({
   categories,
@@ -14,10 +17,15 @@ const CategoryLinks = ({
   match,
   openConfirmDelete,
   loading,
-  ui,
-  testState
+  ui
 }) => {
   const [idToDelete, setIdToDelete] = useState("");
+  const [linksByCategory, setLinks] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    setLinks(getLinksByCategoryId(match.params.categoryId, links));
+  }, [links]);
 
   const onDeleteLink = id => {
     setIdToDelete(id);
@@ -36,10 +44,20 @@ const CategoryLinks = ({
     const filtered = links.filter(
       link => link.category._id === catId || link.category === catId
     );
-    return filtered.map(link => {
-      //console.log(link.category._id);
-      return <LinkRow key={link._id} link={link} deleteLink={onDeleteLink} />;
-    });
+    console.log("FILTERED", filtered);
+    return filtered;
+  };
+
+  const displayLinks = () => {
+    const filtered = filterLinks(linksByCategory, searchValue);
+    return filtered.map(link => (
+      <LinkRow key={link._id} link={link} deleteLink={onDeleteLink} />
+    ));
+  };
+
+  const onSearchChange = value => {
+    console.log("VALUE", value);
+    setSearchValue(value);
   };
 
   if (loading) {
@@ -52,12 +70,11 @@ const CategoryLinks = ({
     return category ? category.name : "Unknown Category";
   };
 
-  const linksByCategory = getLinksByCategoryId(match.params.categoryId, links);
-
   return (
     <div>
       <h2>{getCategoryNameById(match.params.categoryId)}</h2>
-      {linksByCategory}
+      <SearchBar onChange={onSearchChange} />
+      {displayLinks()}
       <ConfirmationModal
         modalKey="confirm-delete-link"
         confirmModalState={ui.confirmModalState}
