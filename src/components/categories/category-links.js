@@ -71,7 +71,7 @@ const CategoryLinks = ({
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>{getCategoryNameById(match.params.categoryId)}</h2>
       <SearchBar onChange={onSearchChange} />
       {displayLinks()}

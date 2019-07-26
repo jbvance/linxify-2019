@@ -18,7 +18,7 @@ const CategoriesPage = ({ categories, fetchCategories, match }) => {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <Switch>
         <Route exact path={`${match.path}/add`} component={AddCategory} />
         <Route exact path={`${match.path}`} component={Categories} />

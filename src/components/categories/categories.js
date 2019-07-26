@@ -61,7 +61,7 @@ const Categories = ({
   return loading ? (
     <LoadingSpinner />
   ) : (
-    <div>
+    <div className="container">
       {error && error.error && (
         <div className=" alert alert-danger">{error.error.message}</div>
       )}

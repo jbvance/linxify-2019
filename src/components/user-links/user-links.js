@@ -40,9 +40,9 @@ const UserLinks = ({ links, deleteLink, loading, ui, openConfirmDelete }) => {
     return <LoadingSpinner />;
   }
   return (
-    <div>
+    <div className="container">
       <SearchBar onChange={onSearchChange} />
-      <section className="container links-container">
+      <section className="links-container">
         {!filteredLinks || filteredLinks.length === 0 ? (
           <h3>No Links</h3>
         ) : (

@@ -3,7 +3,7 @@ import "./search-bar.css";
 
 const SearchBar = ({ onChange }) => {
   return (
-    <section className="container search-container">
+    <section className="search-container">
       <div className="search-bar">
         <input
           type="text"
