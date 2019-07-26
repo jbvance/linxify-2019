@@ -13,6 +13,21 @@ nav .brand-logo {
   padding-left: 20px;
 }
 
+.menu-icon {
+  cursor: pointer;
+}
+
+.menu-icon img {
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+@media only screen and (min-width: 992px) {
+  .menu-icon {
+    visibility: hidden;
+  }
+}
 
 .form-error {
   color: red;
@@ -37,30 +52,32 @@ nav .brand-logo {
   -ms-user-select: none;
   user-select: none;
   border: 1px solid transparent;
-  padding: .375rem .75rem;
+  padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1;
-  border-radius: .25rem;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .btn-primary {
   color: #fff;
-  background-color: rgb(92,184,92);
-  border-color: rgb(92,184,92);
+  background-color: rgb(92, 184, 92);
+  border-color: rgb(92, 184, 92);
 }
 
 .btn:not(:disabled):not(.disabled) {
-cursor: pointer;
+  cursor: pointer;
 }
-
 
 .container h2 {
   text-align: center;
   margin: 30px;
 }
 
-textarea {height: 6rem;}
+textarea {
+  height: 6rem;
+}
 
 .alert-danger {
   color: #721c24;
@@ -70,28 +87,32 @@ textarea {height: 6rem;}
 
 .alert {
   position: relative;
-  padding: .75rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;
   margin-top: 2rem;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 .logo {
   text-transform: uppercase;
-  font-family: 'Orbitron', sans-serif;
-  letter-spacing: .5em;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 0.5em;
 }
 
 .top-nav {
-  background-color: rgb(92,184,92);
+  background-color: rgb(92, 184, 92);
 }
 
-.link-row__button, .btn-submit, .link-row__button:focus, .btn-submit:focus {
-  background-color: rgb(92,184,92);
+.link-row__button,
+.btn-submit,
+.link-row__button:focus,
+.btn-submit:focus {
+  background-color: rgb(92, 184, 92);
 }
 
-.link-row__button:hover, .btn-submit:hover {
+.link-row__button:hover,
+.btn-submit:hover {
   background-color: rgb(76, 155, 76);
 }
 
@@ -102,7 +123,7 @@ textarea {height: 6rem;}
 
 .url-text a {
   text-decoration: none;
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .link-header {

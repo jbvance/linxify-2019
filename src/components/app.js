@@ -11,6 +11,8 @@ import Dashboard from "./dashboard";
 import UserLinksPage from "../components/user-links/user-links-page";
 import CategoriesPage from "../components/categories/categories-page";
 import RegistrationPage from "./registration-page";
+import Toolbar from "./toolbar";
+import SideDrawer1 from "./side-drawer1";
 import { refreshAuthToken } from "../actions/auth";
 
 export class App extends React.Component {
@@ -49,7 +51,7 @@ export class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <Header />
+        <Toolbar />
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/register" component={RegistrationPage} />
