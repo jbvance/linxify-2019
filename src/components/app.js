@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Route, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 import { fetchUserLinks } from "../actions/links";
 import { fetchUserCategories } from "../actions/categories";
@@ -8,6 +8,7 @@ import { fetchUserCategories } from "../actions/categories";
 import Header from "./header-bar";
 import LandingPage from "./landing-page";
 import Dashboard from "./dashboard";
+import NoMatch from "./no-match";
 import UserLinksPage from "../components/user-links/user-links-page";
 import CategoriesPage from "../components/categories/categories-page";
 import RegistrationPage from "./registration-page";
@@ -52,11 +53,14 @@ export class App extends React.Component {
     return (
       <div className="app">
         <Toolbar />
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/register" component={RegistrationPage} />
-        <Route path="/links" component={UserLinksPage} />
-        <Route path="/categories" component={CategoriesPage} />
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/register" component={RegistrationPage} />
+          <Route path="/links" component={UserLinksPage} />
+          <Route path="/categories" component={CategoriesPage} />
+          <Route component={NoMatch} />
+        </Switch>
       </div>
     );
   }
