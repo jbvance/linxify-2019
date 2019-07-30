@@ -143,12 +143,9 @@ export const addLink = ({ url, category, title, note }) => async (
     });
 };
 
-export const addLinkFromAddressBar = ({
-  url,
-  category = null,
-  title = null,
-  note = null
-}) => async (dispatch, getState) => {
+export const addLinkFromAddressBar = link => async (dispatch, getState) => {
+  console.log("OBJECT", link);
+  const { url, category, title, note } = link;
   dispatch(editLinkRequest());
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/links`, {

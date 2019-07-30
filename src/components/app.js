@@ -2,10 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Switch, withRouter } from "react-router-dom";
 
-import { fetchUserLinks } from "../actions/links";
+import { fetchUserLinks, addLinkFromAddressBar } from "../actions/links";
 import { fetchUserCategories } from "../actions/categories";
-
-import Header from "./header-bar";
 import LandingPage from "./landing-page";
 import Dashboard from "./dashboard";
 import NoMatch from "./no-match";
@@ -13,15 +11,21 @@ import UserLinksPage from "../components/user-links/user-links-page";
 import CategoriesPage from "../components/categories/categories-page";
 import RegistrationPage from "./registration-page";
 import Toolbar from "./toolbar";
-import SideDrawer1 from "./side-drawer1";
 import { refreshAuthToken } from "../actions/auth";
 
 export class App extends React.Component {
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
+    const { linkToSave } = this.props;
     if (!prevProps.loggedIn && this.props.loggedIn) {
-      const { dispatch, authToken } = this.props;
+      console.log("LINK TO SAVE", linkToSave);
       // When we are logged in, refresh the auth token periodically
       this.startPeriodicRefresh();
+      if (linkToSave && linkToSave.url) {
+        await this.props.saveExternalLink({
+          url: linkToSave.url,
+          category: linkToSave.category
+        });
+      }
       this.props.fetchLinks();
       this.props.fetchCategories();
     } else if (prevProps.loggedIn && !this.props.loggedIn) {
@@ -68,13 +72,15 @@ export class App extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   fetchCategories: () => dispatch(fetchUserCategories()),
-  fetchLinks: () => dispatch(fetchUserLinks())
+  fetchLinks: () => dispatch(fetchUserLinks()),
+  saveExternalLink: link => dispatch(addLinkFromAddressBar(link))
 });
 
 const mapStateToProps = state => ({
   hasAuthToken: state.auth.authToken !== null,
   loggedIn: state.auth.currentUser !== null,
-  authToken: state.auth.authToken
+  authToken: state.auth.authToken,
+  linkToSave: state.userLinks.linkToSave
 });
 
 // Deal with update blocking - https://reacttraining.com/react-router/web/guides/dealing-with-update-blocking

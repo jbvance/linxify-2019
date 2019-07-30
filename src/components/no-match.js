@@ -20,6 +20,7 @@ export const NoMatch = props => {
   }
 
   validUrl = isValidUrl(url);
+  console.log("URL TO SAVE", url);
   if (validUrl) {
     // if user is not logged in, save linkToSave to state and redirect to login
     // after user logs in, it will check to see if there is anything in linkToSave,
