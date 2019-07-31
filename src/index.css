@@ -39,6 +39,14 @@ nav .brand-logo {
   align-content: center;
 }
 
+a {
+  color: rgb(92, 184, 92);
+}
+
+a.btn {
+  padding: 10px 0;
+}
+
 .btn {
   width: 75px;
   display: inline-block;

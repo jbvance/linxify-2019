@@ -6,3 +6,17 @@ export const isValidUrl = str => {
     return false;
   }
 };
+
+export const sortArrayByField = (arr, field) => {
+  return arr.sort((a, b) => {
+    if (a[field] < b[field]) {
+      return -1;
+    }
+    if (a[field] > b[field]) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
+};

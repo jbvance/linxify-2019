@@ -6,8 +6,9 @@ import ConfirmationModal from "../confirmation-modal";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 
 import { deleteCategory } from "../../actions/categories";
+import { sortArrayByField } from "../../utils";
 
-const Categories = ({
+export const Categories = ({
   categories,
   deleteCategory,
   error,
@@ -29,7 +30,9 @@ const Categories = ({
     setIdToDelete("");
   };
   const listCategories = catList => {
-    return catList.map(category => {
+    const sorted = sortArrayByField(catList, "name");
+
+    return sorted.map(category => {
       const { _id, name } = category;
       return (
         <div className="link-row" key={_id}>
